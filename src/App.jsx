@@ -1,5 +1,5 @@
 import "./App.css";
-import { Button, Stack, Text } from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
 import clockImage from "./assets/clock_device_transparent.webp";
 
 function App() {
