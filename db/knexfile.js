@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 /* eslint-disable no-undef */
 
 import path from "path";
@@ -8,7 +9,6 @@ dotenv.config({
   path: path.resolve(fileURLToPath(import.meta.url)),
 });
 
-// eslint-disable-next-line no-unused-vars
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 

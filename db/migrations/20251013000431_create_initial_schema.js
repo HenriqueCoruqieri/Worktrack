@@ -11,6 +11,7 @@ export const up = function (knex) {
       table.string("password").notNullable();
       table.date("working_since").notNullable();
       table.boolean("active").notNullable().defaultTo(true);
+      table.boolean("admin").notNullable().defaultTo(false);
       table.timestamps(true, true);
     })
 
@@ -94,7 +95,6 @@ export const up = function (knex) {
  * @returns { Promise<void> }
  */
 export const down = function (knex) {
-  // A ordem de deleção é a INVERSA da criação para evitar erros de chave estrangeira
   return knex.schema
     .dropTableIfExists("vacations")
     .dropTableIfExists("requests")
