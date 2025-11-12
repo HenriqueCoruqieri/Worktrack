@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "../schemas/authSchema";
 import { Link as RouterLink } from "react-router-dom";
+import ForgotPassword from "./forgot-password";
 import {
   Box,
   VStack,
@@ -16,6 +17,8 @@ import {
 } from "@chakra-ui/react";
 
 const LoginForm = () => {
+  const [isForgotPasswordOpen, setIsForgotPasswordOpen] = React.useState(false);
+
   const {
     register,
     handleSubmit,
@@ -106,7 +109,7 @@ const LoginForm = () => {
             Cadastrar
           </Link>
           <Link
-            as={RouterLink}
+            onClick={() => setIsForgotPasswordOpen(true)}
             to="/forgot-password"
             font="inherit"
             color="white"
@@ -115,6 +118,11 @@ const LoginForm = () => {
           </Link>
         </VStack>
       </VStack>
+
+      <ForgotPassword
+        isOpen={isForgotPasswordOpen}
+        onClose={() => setIsForgotPasswordOpen(false)}
+      />
     </Box>
   );
 };

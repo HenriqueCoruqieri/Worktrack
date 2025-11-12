@@ -1,15 +1,15 @@
 import { lazy, Suspense } from "react";
 
-const Home = lazy(() => import("../App"));
+const App = lazy(() => import("../App"));
 const Register = lazy(() => import("../pages/register"));
-const ForgotPassword = lazy(() => import("../pages/forgot-passowrd"));
+const UserHomepage = lazy(() => import("../pages/user-homepage"));
 
 export const appRoutes = [
   {
     path: "/",
     element: (
       <Suspense fallback={<div>Loading...</div>}>
-        <Home />
+        <App />
       </Suspense>
     ),
   },
@@ -24,10 +24,10 @@ export const appRoutes = [
   },
 
   {
-    path: "/forgotpass",
+    path: "[slug]",
     element: (
       <Suspense fallback={<div>Loading...</div>}>
-        <ForgotPassword />
+        <UserHomepage />
       </Suspense>
     ),
   },

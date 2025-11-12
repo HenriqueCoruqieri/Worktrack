@@ -38,7 +38,7 @@ const LoginForm = () => {
     <Box color="white" p={8} w="100%" maxW="md">
       <VStack spacing={4} as="form" onSubmit={handleSubmit(onSubmit)}>
         <Heading fontWeight="bold" color="springgreen" as="h1" size="2xl">
-          Cadastro de Usuário
+          Cadastrar
         </Heading>
 
         {/* Campo Usuário */}
