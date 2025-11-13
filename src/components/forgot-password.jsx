@@ -39,7 +39,7 @@ const ForgotPassword = ({ isOpen, onClose }) => {
               size="md"
               w="100%"
               rounded="full"
-              onClick={onClose} // Simular o envio e fechar o modal
+              onClick={onClose}
             >
               Enviar Link de Redefinição
             </Button>

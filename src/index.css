@@ -12,7 +12,7 @@
   select:-webkit-autofill:focus {
     -webkit-text-fill-color: #ffffff;
     caret-color: #ffffff;
-    transition: background-color 9999s ease-in-out 0s; /* truque p/ manter a cor */
+    transition: background-color 9999s ease-in-out 0s; /* truque para manter a cor do input*/
     border-radius: inherit; /* respeita borda do input */
   }
 }

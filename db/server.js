@@ -14,10 +14,58 @@ db.raw("SELECT 1")
   .then(() => console.log("Conectado ao PostgreSQL via Knex!!"))
   .catch((err) => console.error("Erro na conexão com PostgreSQL:", err));
 
+app.post("/api/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    // Validação dos dados
+    if (!email || !password) {
+      return res.status(400).json({ error: "Email e senha são obrigatórios" });
+    }
+
+    // Buscar usuário pelo email
+    const user = await db("users").where("email", email).first();
+
+    if (!user) {
+      return res.status(401).json({ error: "Email ou senha inválidos" });
+    }
+
+    // Verificar se o usuário está ativo
+    if (!user.active) {
+      return res.status(403).json({ error: "Usuário inativo" });
+    }
+
+    // Comparando senhas
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+
+    if (!isPasswordValid) {
+      return res.status(401).json({ error: "Email ou senha inválidos" });
+    }
+
+    // Retornar dados do usuário
+    return res.status(200).json({
+      message: "Login bem-sucedido!",
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        admin: user.admin,
+      },
+    });
+  } catch (error) {
+    console.error("Erro ao fazer login:", error);
+    return res.status(500).json({
+      error: "Erro ao fazer login",
+      details: error.message,
+    });
+  }
+});
+
 app.post("/api/register", async (req, res) => {
   try {
     const { user, email, password, active, admin } = req.body;
 
+    // Retorna erro caso os dados estiverem incompletos
     if (!user || !email || !password || active || admin) {
       return res.status(400).json({ error: "Dados de cadastro incompletos" });
     }

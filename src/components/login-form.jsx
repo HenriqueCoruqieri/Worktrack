@@ -4,8 +4,9 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "../schemas/authSchema";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import ForgotPassword from "./forgot-password";
+import { slugify } from "../utils/slugify";
 import {
   Box,
   VStack,
@@ -15,8 +16,11 @@ import {
   Text,
   Link,
 } from "@chakra-ui/react";
+import axios from "axios";
 
 const LoginForm = () => {
+  const [isLoading, setIsLoading] = React.useState(false);
+  const navigate = useNavigate();
   const [isForgotPasswordOpen, setIsForgotPasswordOpen] = React.useState(false);
 
   const {
@@ -28,8 +32,33 @@ const LoginForm = () => {
   });
 
   const onSubmit = async (data) => {
-    console.log("Dados do formulário:", data);
-    alert("Login simulado com sucesso! Verifique o console para os dados.");
+    setIsLoading(true);
+    console.log("Tentativa de login com:", data);
+
+    try {
+      const response = await axios.post("http://localhost:3000/api/login", {
+        email: data.email,
+        password: data.password,
+      });
+
+      const userData = response.data.user;
+
+      const userSlug = slugify(userData.name);
+
+      const redirectPath = `${userSlug}`;
+
+      navigate(redirectPath);
+
+      alert(`Login bem-sucedido! Redirecionando para: ${redirectPath}`);
+    } catch (error) {
+      console.error("Erro no login:", error);
+      const errorMessage =
+        error.response?.data?.error ||
+        "Erro ao tentar fazer login. Verifique o console.";
+      alert(errorMessage);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -86,6 +115,8 @@ const LoginForm = () => {
           w="100%"
           rounded="full"
           mt={4}
+          isLoading={isLoading}
+          loadingText="Entrando..."
         >
           Entrar
         </Button>

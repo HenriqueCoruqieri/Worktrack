@@ -24,7 +24,7 @@ export const appRoutes = [
   },
 
   {
-    path: "[slug]",
+    path: ":nome",
     element: (
       <Suspense fallback={<div>Loading...</div>}>
         <UserHomepage />
